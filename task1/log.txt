@@ -1,0 +1,11 @@
+commit 5fe0d6a016269071ff92be34b2d43d0a1e025cac (HEAD -> master)
+Author: DmitryKobzev <dmitriykobzev99@gmail.com>
+Date:   Tue Feb 6 17:07:35 2018 +0300
+
+    add status.txt
+
+commit 3e0b7f08f21ce01e1973f31e8370ea1371462fb6
+Author: DmitryKobzev <dmitriykobzev99@gmail.com>
+Date:   Tue Feb 6 16:44:55 2018 +0300
+
+    add .gitignore
