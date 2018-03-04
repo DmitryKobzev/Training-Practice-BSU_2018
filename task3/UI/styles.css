@@ -1,11 +1,11 @@
 html,body {
     height: 100%;
     margin: 0;
-    outline:none;
 }
 
 *{
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    outline:none;
 }
 
 body{
@@ -124,6 +124,12 @@ header{
 .material-icons{ 
     width: 30%;
     cursor: pointer; 
+    background-color:transparent;
+    border: 0;
+}
+
+.like{
+    color:red;
 }
 
 .filter{
