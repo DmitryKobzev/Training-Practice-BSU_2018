@@ -75,8 +75,11 @@ let modulSecond = (function () {
 
     let addPost = function (photoPost) {
         if (modulFirst.addPhotoPost(photoPost)) {
-            lenta.insertBefore(createPhotoPost(photoPost), lenta.children[0]);
-            //lenta.appendChild(createPhotoPost(photoPost));
+            let ind = photoPosts.findIndex((el)=>{return el.id===photoPost.id})
+          /*  if(ind > photoPosts.length){
+                return false;
+            }*/
+            lenta.insertBefore(createPhotoPost(photoPost), lenta.children[ind]);
             return true;
         }
         return false;
@@ -89,21 +92,19 @@ let modulSecond = (function () {
         return false;
     }
     let clearLenta = function () {
+        lenta.innerHTML = "";
+    }
+    let showMore = function (skip, top, filterNickname, filterHashTags, filterDate) {
         let load_more = document.createElement('button');
         load_more.className ='load-more';
         load_more.innerHTML='Load more';
-        lenta.innerHTML = "";
-        lenta.appendChild(load_more);
-    }
-    let showMore = function (skip, top, filterNickname, filterHashTags, filterDate) {
         let arr = modulFirst.getPhotoPosts(skip, top, filterNickname, filterHashTags, filterDate);
-       /* for(var i=0;i<arr.length;i++){
-          //  lenta.insertBefore(createPhotoPost(arr[i]), lenta.children[0]);
-            lenta.appendChild(createPhotoPost(arr[i]));
-        }*/
+        let ind =0;
         arr.forEach(element => {
-            lenta.insertBefore(createPhotoPost(element), lenta.children[0]);
+             ind = photoPosts.findIndex((el)=>{return el.id===element.id})
+            lenta.insertBefore(createPhotoPost(element), lenta.children[ind]);
         });
+        lenta.insertBefore(load_more, lenta.children[ind]);
     }
 
     let editPhotoPost = function (id, photoPost) {
@@ -174,13 +175,13 @@ modulSecond.addPost({
 modulSecond.addPost({
     id: "6",
     description: 'Few of us like to be told we are average. Americans are no exception',
-    createdAt: new Date(2018, 5, 26, 17, 12, 55),
+    createdAt: new Date(2018, 5, 10, 17, 12, 55),
     author: 'Dima',
     photoLink: 'images/comedy.jpg',
     hashTags: ['#tag1', '#tag2'],
     likes: ['Urgant'],
 });
-//modulSecond.clearLenta();
-//modulSecond.showMore(0,10,filterNickname,{},{});
-modulSecond.removePost('3');
-modulSecond.editPhotoPost('1',{ description: 'hello'});
+modulSecond.clearLenta();
+modulSecond.showMore(0,10,filterNickname,{},{});
+//modulSecond.removePost('3');
+//modulSecond.editPhotoPost('1',{ description: 'hello'});
