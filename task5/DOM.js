@@ -76,13 +76,18 @@ let modulSecond = (function () {
     let addPost = function (photoPost) {
         if (modulFirst.addPhotoPost(photoPost)) {
             let ind = photoPosts.findIndex((el)=>{return el.id===photoPost.id})
-          /*  if(ind > photoPosts.length){
+         /*   if(ind > lenta.childNotes.length){
+                modulFirst.removePhotoPost(ind);
                 return false;
             }*/
             lenta.insertBefore(createPhotoPost(photoPost), lenta.children[ind]);
             return true;
         }
         return false;
+    }
+
+    let checkId = function(id){
+        
     }
     let removePost = function (id) {
         if (modulFirst.removePhotoPost(id)) {
@@ -104,7 +109,7 @@ let modulSecond = (function () {
              ind = photoPosts.findIndex((el)=>{return el.id===element.id})
             lenta.insertBefore(createPhotoPost(element), lenta.children[ind]);
         });
-        lenta.insertBefore(load_more, lenta.children[ind]);
+        lenta.appendChild(load_more);
     }
 
     let editPhotoPost = function (id, photoPost) {
