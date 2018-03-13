@@ -13,6 +13,8 @@ let modulSecond = (function () {
             authorization.style.display = 'none';
             add_Post.style.display = 'initial';
             exit.style.display = 'initial';
+            clearLenta();
+            showMore(0,10,{},{},{});
         }
         if (newUser === 'Guest') {
             user = 'Guest';
@@ -20,6 +22,8 @@ let modulSecond = (function () {
             authorization.style.display = 'initial';
             add_Post.style.display = 'none';
             exit.style.display = 'none';
+            clearLenta();
+            showMore(0,10,{},{},{});
         }
     }
 
