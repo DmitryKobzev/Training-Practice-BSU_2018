@@ -49,6 +49,10 @@ let modulSecond = (function () {
         let like = document.createElement('buttom');
         like.className = 'material-icons like';
         like.innerHTML = "favorite_border";
+        like.style.display = 'initial';
+        if(user === 'Guest'){
+            like.style.display = 'none';
+        }
         let edit = document.createElement('buttom');
         edit.className = 'material-icons edit';
         edit.innerHTML = "mode_edit";
@@ -56,7 +60,6 @@ let modulSecond = (function () {
         deletePost.className = 'material-icons delete';
         deletePost.innerHTML = "cancel";
         if (user !== null && user !== photoPost.author) {
-          //  like.style.display = 'none';
             edit.style.display = 'none';
             deletePost.style.display = 'none';
         }
