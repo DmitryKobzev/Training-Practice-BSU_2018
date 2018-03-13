@@ -11,6 +11,8 @@ let modulSecond = (function () {
             user = newUser;
             nickname.innerHTML = user;
             authorization.style.display = 'none';
+            add_Post.style.display = 'initial';
+            exit.style.display = 'initial';
         }
         if (newUser === 'Guest') {
             user = 'Guest';
