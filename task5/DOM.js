@@ -52,9 +52,6 @@ let modulSecond = (function () {
         like.className = 'material-icons like';
         like.innerHTML = "favorite_border";
         like.style.display = 'initial';
-        if(user === 'Guest'){
-            like.style.display = 'none';
-        }
         let edit = document.createElement('buttom');
         edit.className = 'material-icons edit';
         edit.innerHTML = "mode_edit";
@@ -62,6 +59,11 @@ let modulSecond = (function () {
         deletePost.className = 'material-icons delete';
         deletePost.innerHTML = "cancel";
         if (user !== null && user !== photoPost.author) {
+            edit.style.display = 'none';
+            deletePost.style.display = 'none';
+        }
+        if(user === 'Guest'){
+            like.style.display = 'none';
             edit.style.display = 'none';
             deletePost.style.display = 'none';
         }
@@ -91,9 +93,6 @@ let modulSecond = (function () {
         return false;
     }
 
-    let checkId = function (id) {
-
-    }
     let removePost = function (id) {
         if (modulFirst.removePhotoPost(id)) {
             lenta.removeChild(document.getElementById(id));
@@ -192,9 +191,9 @@ modulSecond.addPost({
     hashTags: ['#tag1', '#tag2'],
     likes: ['Urgant'],
 });
-modulSecond.clearLenta();
-modulSecond.showMore(0, 10, filterNickname, {}, {});
-modulSecond.clearLenta();
-modulSecond.showMore(0, 10, {}, {}, {});
+//modulSecond.clearLenta();
+//modulSecond.showMore(0, 10, filterNickname, {}, {});
+//modulSecond.clearLenta();
+//modulSecond.showMore(0, 10, {}, {}, {});
 //modulSecond.removePost('3');
 //modulSecond.editPhotoPost('1',{ description: 'hello'});
