@@ -41,7 +41,7 @@ let modulFirst = (function () {
         }
         
 
-        sortedPhotoPosts = sortedPhotoPosts.filter(post => {
+        return sortedPhotoPosts.filter(post => {
             if (filterNickname !== undefined && filterNickname.hasOwnProperty("nickname")) {
                 if (filterNickname.nickname !== post.author) {
                     return false;
@@ -65,8 +65,7 @@ let modulFirst = (function () {
             }
 
             return true;
-        });
-        return sortedPhotoPosts.slice(skip, top + skip);
+        }).slice(skip, top + skip);
     }
 
     let validatePhotoPost = function (photoPost) {
