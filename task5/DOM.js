@@ -2,20 +2,20 @@ let modulSecond = (function () {
     let lenta = document.querySelector('.lenta');
     let nickname = document.querySelector('.nickname');
     let add_Post = document.querySelector('.add-post');
-    let exit =document.querySelector('.exit');
-    let authorization =document.querySelector('.authorization');
+    let exit = document.querySelector('.exit');
+    let authorization = document.querySelector('.authorization');
     var user = null;
 
     let activetedUser = function (newUser) {
-        if (typeof newUser !== null ) {
+        if (typeof newUser !== null) {
             user = newUser;
             nickname.innerHTML = user;
-            authorization.style.display='none';
-        } 
-        if(newUser === 'Guest') {
-            user='Guest';
+            authorization.style.display = 'none';
+        }
+        if (newUser === 'Guest') {
+            user = 'Guest';
             nickname.innerHTML = user;
-            authorization.style.display='initial';
+            authorization.style.display = 'initial';
             add_Post.style.display = 'none';
             exit.style.display = 'none';
         }
@@ -56,13 +56,13 @@ let modulSecond = (function () {
         deletePost.className = 'material-icons delete';
         deletePost.innerHTML = "cancel";
         if (user !== null && user !== photoPost.author) {
-            like.style.display = 'none';
+          //  like.style.display = 'none';
             edit.style.display = 'none';
             deletePost.style.display = 'none';
         }
         let comment = document.createElement('div');
         comment.className = "comment";
-        comment.innerHTML = "<p>" + "<strong>" + photoPost.description +  "</strong>" + "</p>";
+        comment.innerHTML = "<p>" + "<strong>" + photoPost.description + "</strong>" + "</p>";
         top.append(left, date, right);
         post.appendChild(top);
         Photo.append(photo);
@@ -75,19 +75,19 @@ let modulSecond = (function () {
 
     let addPost = function (photoPost) {
         if (modulFirst.addPhotoPost(photoPost)) {
-            let ind = photoPosts.findIndex((el)=>{return el.id===photoPost.id})
-         /*   if(ind > lenta.childNotes.length){
-                modulFirst.removePhotoPost(ind);
-                return false;
-            }*/
+            let ind = photoPosts.findIndex((el) => { return el.id === photoPost.id })
+            /*   if(ind > lenta.childNotes.length){
+                   modulFirst.removePhotoPost(ind);
+                   return false;
+               }*/
             lenta.insertBefore(createPhotoPost(photoPost), lenta.children[ind]);
             return true;
         }
         return false;
     }
 
-    let checkId = function(id){
-        
+    let checkId = function (id) {
+
     }
     let removePost = function (id) {
         if (modulFirst.removePhotoPost(id)) {
@@ -99,14 +99,15 @@ let modulSecond = (function () {
     let clearLenta = function () {
         lenta.innerHTML = "";
     }
+
     let showMore = function (skip, top, filterNickname, filterHashTags, filterDate) {
         let load_more = document.createElement('button');
-        load_more.className ='load-more';
-        load_more.innerHTML='Load more';
+        load_more.className = 'load-more';
+        load_more.innerHTML = 'Load more';
         let arr = modulFirst.getPhotoPosts(skip, top, filterNickname, filterHashTags, filterDate);
-        let ind =0;
+        let ind = 0;
         arr.forEach(element => {
-             ind = photoPosts.findIndex((el)=>{return el.id===element.id})
+            ind = photoPosts.findIndex((el) => { return el.id === element.id })
             lenta.insertBefore(createPhotoPost(element), lenta.children[ind]);
         });
         lenta.appendChild(load_more);
@@ -187,6 +188,8 @@ modulSecond.addPost({
     likes: ['Urgant'],
 });
 modulSecond.clearLenta();
-modulSecond.showMore(0,10,filterNickname,{},{});
+modulSecond.showMore(0, 10, filterNickname, {}, {});
+modulSecond.clearLenta();
+modulSecond.showMore(0, 10, {}, {}, {});
 //modulSecond.removePost('3');
 //modulSecond.editPhotoPost('1',{ description: 'hello'});
