@@ -8,6 +8,13 @@ html,body {
     outline:none;
 }
 
+main{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow-y: hidden;
+}
+
 body{
     flex-direction: column;
 }
@@ -63,13 +70,74 @@ header{
     margin-right: 1%;
     border-radius: 5px;
  }
-
+.error-page{
+    flex:1 0 auto;
+    margin-top:30px;
+    flex-direction: column;
+    align-items: center;
+}
+.error-photo{
+    width: 50%;
+    margin-left:25%;
+}
+.error-text{
+    font-size: 35px;
+    margin-top: 2%;
+}
+.error-sorry{
+    font-size: 25px;
+    color: #006ce5;
+}
+.login{
+    flex:1 0 auto;
+    margin-top:5%;
+    flex-direction: column;
+    align-items: center;
+}
+.login-photo{
+    height: 30%;
+}
+.blick-boom{
+    font-size: 35px;
+    margin-top: 0%;
+}
+.welcome{
+    font-size: 25px;
+}
+.email{
+    border-radius: 1px;
+    margin-top: 2%;
+    width: 20%;
+    font-size: 20px;
+    border-color: #4dd7fa;
+    background-color:#f7fade;
+}
+.password{
+    border-radius: 1px;
+    margin-top: 2%;
+    width: 20%;
+    font-size: 20px;
+    border-color: #4dd7fa;
+    background-color:#f7fade;
+}
+.sign-in{
+    margin:3% 0% 5% 0%;
+    text-align:center;
+    cursor: pointer; 
+    width: 20%;
+    color: white;
+    background-color: #2195f380;
+    border-color:  #aaaaaa;
+    font-size: 25px;
+    border-radius: 1px;
+}
 
 .lenta{
     flex:1 0 auto;
     margin-top:60px;
     flex-direction: column;
     align-items: center;
+    overflow-y: scroll;
 }
 
 .post{
@@ -196,6 +264,7 @@ footer{
     margin:5% 0% 5% 0%;
     text-align:center;
     cursor: pointer; 
+    min-height: 40px;
     width: 20%;
     color: white;
     background-color: rgb(8, 209, 235);
@@ -207,6 +276,28 @@ footer{
 .nickname{
     margin-left:0;
     font-size: 25px;
+}
+.email{
+    margin-top:2%;
+    width: 50%;
+    height: 10%;
+}
+.password{
+    width: 50%;
+    height: 10%;
+}
+.sign-in{
+    width: 50%;
+    font-size: 20px;
+    height: 15%;
+}
+.welcome{
+    margin-top:2%;
+    font-size: 20px;
+    height: 40%;
+}
+.blick-boom{
+    font-size: 20px;
 }
 
 .add-post{
@@ -263,6 +354,10 @@ footer{
     margin-left:0;
     font-size: 25px;
 }
+.lenta{
+    width: 50%;
+}
+
            
 .add-post{
     width: 20%;
