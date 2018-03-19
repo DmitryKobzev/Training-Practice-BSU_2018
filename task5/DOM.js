@@ -2,11 +2,11 @@ let modulSecond = (function () {
     let lenta = document.querySelector('.lenta');
     let nickname = document.querySelector('.nickname');
     let add_Post = document.querySelector('.add-post');
-    let exit = document.querySelector('.exit');
+    let exit = document.querySelector('.exit-icon');
     let authorization = document.querySelector('.authorization');
-    var user = null;
+    var user = 'Guest';
 
-    let activetedUser = function (newUser) {
+    let activatedUser = function (newUser) {
         if (typeof newUser !== null) {
             user = newUser;
             nickname.innerHTML = user;
@@ -14,7 +14,7 @@ let modulSecond = (function () {
             add_Post.style.display = 'initial';
             exit.style.display = 'initial';
             clearLenta();
-            showMore(0,10,{},{},{});
+            showMore(0, 10, {}, {}, {});
         }
         if (newUser === 'Guest') {
             user = 'Guest';
@@ -23,7 +23,7 @@ let modulSecond = (function () {
             add_Post.style.display = 'none';
             exit.style.display = 'none';
             clearLenta();
-            showMore(0,10,{},{},{});
+            showMore(0, 10, {}, {}, {});
         }
     }
 
@@ -66,7 +66,7 @@ let modulSecond = (function () {
             edit.style.display = 'none';
             deletePost.style.display = 'none';
         }
-        if(user === 'Guest'){
+        if (user === 'Guest') {
             like.style.display = 'none';
             edit.style.display = 'none';
             deletePost.style.display = 'none';
@@ -105,20 +105,18 @@ let modulSecond = (function () {
         return false;
     }
     let clearLenta = function () {
-        lenta.innerHTML = "";
+        lenta.innerHTML = '<button class="load-more">Load more</button>';
     }
 
     let showMore = function (skip, top, filterNickname, filterHashTags, filterDate) {
-        let load_more = document.createElement('button');
-        load_more.className = 'load-more';
-        load_more.innerHTML = 'Load more';
+        let load_more = document.getElementsByClassName('load-more')[0];
         let arr = modulFirst.getPhotoPosts(skip, top, filterNickname, filterHashTags, filterDate);
         let ind = 0;
         arr.forEach(element => {
             ind = photoPosts.findIndex((el) => { return el.id === element.id })
-            lenta.insertBefore(createPhotoPost(element), lenta.children[ind]);
+            //lenta.insertBefore(createPhotoPost(element), lenta.children[ind]);
+            lenta.insertBefore(createPhotoPost(element), load_more);
         });
-        lenta.appendChild(load_more);
     }
 
     let editPhotoPost = function (id, photoPost) {
@@ -129,8 +127,9 @@ let modulSecond = (function () {
         return false;
     }
 
+
     return {
-        activetedUser,
+        activatedUser,
         createPhotoPost,
         addPost,
         showMore,
@@ -140,7 +139,7 @@ let modulSecond = (function () {
     }
 
 })();
-modulSecond.activetedUser('Dima');
+modulSecond.activatedUser('Guest');
 modulSecond.addPost({
     id: "1",
     description: 'Good day!',
