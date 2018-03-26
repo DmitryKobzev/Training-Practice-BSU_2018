@@ -1,0 +1,68 @@
+.login{
+    flex:1 0 auto;
+    flex-direction: column;
+    align-items: center;
+}
+.login-photo{
+    height: 30%;
+}
+.blick-boom{
+    font-size: 35px;
+    margin-top: 0%;
+}
+.welcome{
+    font-size: 25px;
+}
+.email{
+    border-radius: 1px;
+    margin-top: 2%;
+    width: 25%;
+    font-size: 20px;
+    border-color: #4dd7fa;
+    background-color:#f7fade;
+}
+.password{
+    border-radius: 1px;
+    margin-top: 2%;
+    width: 25%;
+    font-size: 20px;
+    border-color: #4dd7fa;
+    background-color:#f7fade;
+}
+.sign-in{
+    margin:3% 0% 5% 0%;
+    text-align:center;
+    cursor: pointer; 
+    width: 25%;
+    color: white;
+    background-color: #2195f380;
+    border-color:  #aaaaaa;
+    font-size: 25px;
+    border-radius: 1px;
+}
+@media screen and (max-width:550px){
+    .blick-boom{
+        font-size: 25px;
+    }
+    .welcome{
+        margin-top:2%;
+        font-size: 20px;
+        height: 40%;
+    }
+    .email{
+        margin-top:5%;
+        width: 50%;
+    }
+    .password{
+        margin-top:5%;
+        width: 50%;
+    }
+    .sign-in{
+        margin-top:5%;
+        width: 50%;
+        font-size: 20px;
+        height: 5%;
+    }
+    
+        
+    }
