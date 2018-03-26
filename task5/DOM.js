@@ -1,10 +1,11 @@
+var user = null;
+
 let modulSecond = (function () {
-    let lenta = document.querySelector('.lenta');
-    let nickname = document.querySelector('.nickname');
-    let add_Post = document.querySelector('.add-post');
-    let exit = document.querySelector('.exit-icon');
-    let authorization = document.querySelector('.authorization');
-    var user = 'Guest';
+    const lenta = document.querySelector('.lenta');
+    const nickname = document.querySelector('.name');
+    const add_Post = document.querySelector('.add-post');
+    const exit = document.querySelector('.exit-icon');
+    const authorization = document.querySelector('.authorization');
 
     let activatedUser = function (newUser) {
         if (typeof newUser !== null) {
@@ -14,54 +15,67 @@ let modulSecond = (function () {
             add_Post.style.display = 'initial';
             exit.style.display = 'initial';
             clearLenta();
-            showMore(0, 10, {}, {}, {});
+            showMore(0, 10);
         }
         if (newUser === 'Guest') {
             user = 'Guest';
             nickname.innerHTML = user;
+            document.querySelector('.exit-icon').remove();
+            document.querySelector('.add-post').remove();
             authorization.style.display = 'initial';
             add_Post.style.display = 'none';
             exit.style.display = 'none';
             clearLenta();
-            showMore(0, 10, {}, {}, {});
+            showMore(0, 10);
         }
     }
 
-    let createPhotoPost = function (photoPost) {
-        let post = document.createElement('div');
-        post.id = photoPost.id;
-        post.className = 'post my-flex';
-        let top = document.createElement('div');
+    let createTopPost = function (photoPost) {
+        const top = document.createElement('div');
         top.className = 'top-post my-flex';
-        let left = document.createElement('div');
+        const left = document.createElement('div');
         left.className = 'left';
         left.innerHTML = "<p>" + photoPost.author + "</p>";
-        let date = document.createElement('div');
+        const date = document.createElement('div');
         date.className = 'date';
-        date.innerHTML = "<p>" + photoPost.createdAt.getDate() + "." + photoPost.createdAt.getMonth() + '.' + photoPost.createdAt.getFullYear()
-            + "<br>" + "at " + photoPost.createdAt.getHours() + " hours " + photoPost.createdAt.getMinutes() + " minutes" + "</p>";
-        let right = document.createElement('div');
+        date.innerHTML = "<p>" + photoPost.createdAt.getDate() + "."
+            + photoPost.createdAt.getMonth() + '.' + photoPost.createdAt.getFullYear()
+            + "<br>" + "at " + photoPost.createdAt.getHours()
+            + " hours " + photoPost.createdAt.getMinutes() + " minutes" + "</p>";
+        const right = document.createElement('div');
         right.className = "right";
-        right.innerHTML = "<p>" + "<strong>" + photoPost.hashTags.reduce((accum, element) => accum + ' ' + element) + "</strong>" + "</p>";
-        let Photo = document.createElement('div');
+        right.innerHTML = "<p>" + "<strong>"
+            + photoPost.hashTags.reduce((accum, element) => accum + ' ' + element)
+            + "</strong>" + "</p>";
+        top.append(left, date, right);
+        return top;
+    }
+    let createMiddlePost = function (photoPost) {
+        const Photo = document.createElement('div');
         Photo.className = 'Photo';
-        let photo = document.createElement('img');
+        const photo = document.createElement('img');
         photo.className = 'photo';
         photo.src = 'images/comedy.jpg';
-        let bottom = document.createElement('div');
+        Photo.append(photo);
+        return Photo;
+    }
+    let createBottomPost = function (photoPost) {
+        const bottom = document.createElement('div');
         bottom.className = 'bottom-post my-flex';
-        let buttoms = document.createElement('div');
+        const buttoms = document.createElement('div');
         buttoms.className = 'buttoms my-flex';
-        let like = document.createElement('buttom');
-        like.className = 'material-icons like';
-        like.innerHTML = "favorite_border";
+        const like = document.createElement('img');
+        like.className = 'like';
+        like.src = "images/black.png";
         like.style.display = 'initial';
-        let edit = document.createElement('buttom');
-        edit.className = 'material-icons edit';
-        edit.innerHTML = "mode_edit";
-        let deletePost = document.createElement('buttom');
-        deletePost.className = 'material-icons delete';
-        deletePost.innerHTML = "cancel";
+        const edit = document.createElement('img');
+        edit.className = 'edit';
+        edit.id = photoPost.id;
+        edit.src = "images/edit.svg";
+        const deletePost = document.createElement('img');
+        deletePost.className = 'delete';
+        deletePost.id = photoPost.id;
+        deletePost.src = "images/delete-sign.png";
         if (user !== null && user !== photoPost.author) {
             edit.style.display = 'none';
             deletePost.style.display = 'none';
@@ -71,15 +85,23 @@ let modulSecond = (function () {
             edit.style.display = 'none';
             deletePost.style.display = 'none';
         }
-        let comment = document.createElement('div');
+        const comment = document.createElement('div');
         comment.className = "comment";
         comment.innerHTML = "<p>" + "<strong>" + photoPost.description + "</strong>" + "</p>";
-        top.append(left, date, right);
-        post.appendChild(top);
-        Photo.append(photo);
-        post.appendChild(Photo);
         buttoms.append(like, edit, deletePost);
         bottom.append(buttoms, comment);
+        return bottom;
+    }
+
+    let createPhotoPost = function (photoPost) {
+        const post = document.createElement('div');
+        post.id = photoPost.id;
+        post.className = 'post my-flex';
+        let top = createTopPost(photoPost);
+        let Photo = createMiddlePost(photoPost);
+        let bottom = createBottomPost(photoPost);
+        post.appendChild(top);
+        post.appendChild(Photo);
         post.appendChild(bottom);
         return post;
     }
@@ -87,10 +109,6 @@ let modulSecond = (function () {
     let addPost = function (photoPost) {
         if (modulFirst.addPhotoPost(photoPost)) {
             let ind = photoPosts.findIndex((el) => { return el.id === photoPost.id })
-            /*   if(ind > lenta.childNotes.length){
-                   modulFirst.removePhotoPost(ind);
-                   return false;
-               }*/
             lenta.insertBefore(createPhotoPost(photoPost), lenta.children[ind]);
             return true;
         }
@@ -109,8 +127,13 @@ let modulSecond = (function () {
     }
 
     let showMore = function (skip, top, filterNickname, filterHashTags, filterDate) {
-        let load_more = document.getElementsByClassName('load-more')[0];
-        let arr = modulFirst.getPhotoPosts(skip, top, filterNickname, filterHashTags, filterDate);
+        skip = skip || 0;
+        top = top || 10;
+        filterNickname = filterNickname || {};
+        filterHashTags = filterHashTags || {};
+        filterDate = filterDate || {};
+        const load_more = document.getElementsByClassName('load-more')[0];
+        const arr = modulFirst.getPhotoPosts(skip, top, filterNickname, filterHashTags, filterDate);
         let ind = 0;
         arr.forEach(element => {
             ind = photoPosts.findIndex((el) => { return el.id === element.id })
@@ -194,9 +217,12 @@ modulSecond.addPost({
     hashTags: ['#tag1', '#tag2'],
     likes: ['Urgant'],
 });
-//modulSecond.clearLenta();
-//modulSecond.showMore(0, 10, filterNickname, {}, {});
-//modulSecond.clearLenta();
-//modulSecond.showMore(0, 10, {}, {}, {});
-//modulSecond.removePost('3');
-//modulSecond.editPhotoPost('1',{ description: 'hello'});
+
+var likeButton = document.getElementsByClassName("like");
+var editButton = document.getElementsByClassName("edit");
+var deleteButton = document.getElementsByClassName("delete");
+
+localStorage.setItem("PhotoPosts", JSON.stringify(photoPosts));
+localStorage.setItem("Users", JSON.stringify(users));
+localStorage.setItem("Likes", JSON.stringify(likeButton));
+localStorage.setItem("User", JSON.stringify(user));
