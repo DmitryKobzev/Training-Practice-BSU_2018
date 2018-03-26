@@ -1,5 +1,23 @@
 var photoPosts = [
 ];
+var users = [
+    {
+        name: 'Dima',
+        password: '1'
+    },
+    {
+        name: 'Maria',
+        password: '12'
+    },
+    {
+        name: 'Urgant',
+        password: '123'
+    },
+    {
+        name: 'DIMA',
+        password: '1234'
+    }
+];
 var filterNickname = {
     nickname: 'Dima'
 };
@@ -7,7 +25,7 @@ var filterHashTags = {
     hashTags: ['#goodday', '#nice']
 };
 var filterDate = {
-    fromDate: new Date(2018, 5, 1),
+    fromDate: new Date(2018, 5, 22),
     toDate: new Date(2018, 5, 25)
 };
 let modulFirst = (function () {
@@ -32,14 +50,14 @@ let modulFirst = (function () {
     let getPhotoPosts = function (skip, top, filterNickname, filterHashTags, filterDate) {
         skip = skip || 0;
         top = top || 10;
-        /*   filterNickname = filterNickname || {};
-           filterHashTags = filterHashTags || {};
-           filterDate = filterDate || {};*/
+        filterNickname = filterNickname || {};
+        filterHashTags = filterHashTags || {};
+        filterDate = filterDate || {};
         if (typeof skip !== 'number' || typeof top !== 'number') {
             console.log("Oops!You entered an invalid argument!");
             return;
         }
-        
+
 
         return sortedPhotoPosts.filter(post => {
             if (filterNickname !== undefined && filterNickname.hasOwnProperty("nickname")) {
@@ -105,7 +123,7 @@ let modulFirst = (function () {
     }
 
     let editPhotoPost = function (id, photoPost) {
-        var photoPostToChange = getPhotoPost(id);
+        let photoPostToChange = getPhotoPost(id);
         if (!validatePhotoPost(photoPostToChange)) {
             return false;
         }
@@ -113,7 +131,7 @@ let modulFirst = (function () {
             console.log("Invalid argument! Fields {author}, {date}, {id} can not be edited.");
             return false;
         }
-        Object.assign(photoPostToChange, photoPost);
+        Object.assign(getPhotoPost(id), photoPost);
         return true;
     }
 
