@@ -1,8 +1,4 @@
-if (!JSON.parse(localStorage.getItem('PhotoPosts'))) {
-    localStorage.setItem('PhotoPosts', JSON.stringify([]));
-}
-var photoPosts = JSON.parse(localStorage.getItem('PhotoPosts'));
-var users = [
+/*var users = [
     {
         name: 'Dima',
         password: '1'
@@ -30,13 +26,14 @@ var filterHashTags = {
 var filterDate = {
     fromDate: new Date(2018, 5, 22),
     toDate: new Date(2018, 5, 25)
-};
+};*/
 let modulFirst = (function () {
 
     let getPhotoPost = function (id) {
+        let photoPosts = this;
         if (typeof id !== "string") {
             console.log("Oops!You entered an invalid argument!");
-            return;
+            return false;
         }
         for (var i = 0; i < photoPosts.length; i++) {
             if (photoPosts[i].id === id) {
@@ -47,37 +44,39 @@ let modulFirst = (function () {
     }
 
 
-    let getPhotoPosts = function (skip, top, filterNickname, filterHashTags, filterDate) {
-        skip = skip || 0;
-        top = top || 10;
-        filterNickname = filterNickname || {};
-        filterHashTags = filterHashTags || {};
-        filterDate = filterDate || {};
+    let getPhotoPosts = function (skip, top, filterConfig) {
+        let photoPosts = this;
+        skip = +skip || +0;
+        top = +top || +10;
+        // const filterHashTags = filterConfig.hashTags;
+        //   const filterDate = filterConfig.fromDate;;
         if (typeof skip !== 'number' || typeof top !== 'number') {
             console.log("Oops!You entered an invalid argument!");
             return;
         }
-
-
         return photoPosts.filter((post) => {
-            if (filterNickname !== undefined && filterNickname.hasOwnProperty("nickname")) {
-                if (filterNickname.nickname !== post.author) {
+            if (filterConfig.nickname !== '' && filterConfig.hasOwnProperty("nickname")) {
+                if (filterConfig.nickname !== post.author) {
                     return false;
                 }
             }
-            if (filterHashTags !== undefined && filterHashTags.hasOwnProperty("hashTags")) {
-                if (!filterHashTags.hashTags.every((tag) => {
+            if (filterConfig.hashTags !== '' && filterConfig.hasOwnProperty("hashTags")) {
+                if (!filterConfig.hashTags.every((tag) => {
                     return post.hashTags.includes(tag);
                 }))
                     return false;
             }
-            if (filterDate.fromDate !== undefined && filterDate.hasOwnProperty("fromDate")) {
-                if (post.createdAt - filterDate.fromDate < 0) {
+            if (filterConfig.hasOwnProperty("fromDate") && filterConfig.fromDate !== '') {
+                filterConfig.fromDate = new Date(filterConfig.fromDate);
+                post.createdAt = new Date(post.createdAt);
+                if (post.createdAt - filterConfig.fromDate < 0) {
                     return false;
                 }
             }
-            if (filterDate.toDate !== undefined && filterDate.hasOwnProperty("toDate")) {
-                if (filterDate.toDate - post.createdAt < 0) {
+            if (filterConfig.hasOwnProperty("toDate") && filterConfig.toDate !== '') {
+                filterConfig.toDate = new Date(filterConfig.toDate);
+                post.createdAt = new Date(post.createdAt);
+                if (filterConfig.toDate - post.createdAt < 0) {
                     return false;
                 }
             }
@@ -87,6 +86,7 @@ let modulFirst = (function () {
     }
 
     let validatePhotoPost = function (photoPost) {
+        console.log(photoPost);
         if (typeof photoPost.id !== 'string' || photoPost.id === "") {
             return false;
         }
@@ -94,9 +94,6 @@ let modulFirst = (function () {
             return false;
         }
         if (typeof photoPost.description !== 'string' || photoPost.description.length > 200) {
-            return false;
-        }
-        if (!(photoPost.createdAt instanceof Date)) {
             return false;
         }
         if (typeof photoPost.photoLink !== 'string' || photoPost.photoLink === '') {
@@ -112,6 +109,8 @@ let modulFirst = (function () {
     }
 
     let addPhotoPost = function (photoPost) {
+        let photoPosts = this;
+        photoPost.createdAt = new Date();
         if (validatePhotoPost(photoPost)) {
             photoPosts.push(photoPost);
             photoPosts.sort((post1, post2) => {
@@ -122,29 +121,27 @@ let modulFirst = (function () {
 
     }
 
-    let editPhotoPost = function (id, photoPost) {
-        let photoPostToChange = getPhotoPost(id);
-        /*  if (!validatePhotoPost(photoPostToChange)) {
-              return false;
-          }*/
+    let editPhotoPost = function (id, photoPost, post) {
         if (typeof photoPost !== "object" || photoPost.hasOwnProperty("id") || photoPost.hasOwnProperty("author") || photoPost.hasOwnProperty("createdAt")) {
             console.log("Invalid argument! Fields {author}, {date}, {id} can not be edited.");
             return false;
         }
-        Object.assign(getPhotoPost(id), photoPost);
+        Object.assign(post, photoPost);
         return true;
     }
 
 
     let removePhotoPost = function (id) {
+        let photoPosts = this;
         if (typeof id !== "string" || id === "") {
             console.log("Oops!You entered an invalid argument!");
             return false;
         }
+
         for (var i = 0; i < photoPosts.length; i++) {
             if (photoPosts[i].id === id) {
                 photoPosts.splice(i, 1);
-                return "deletion was successful!";
+                return true;
             }
         }
         return false;
@@ -158,3 +155,4 @@ let modulFirst = (function () {
         validatePhotoPost
     }
 })();
+module.exports = modulFirst;
