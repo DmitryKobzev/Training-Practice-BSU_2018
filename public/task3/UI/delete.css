@@ -31,15 +31,6 @@
         margin-top:10%;
         width: 45%;
     }
-    .top-edit{
-        width: 45%;
-    }
-    .Photo-edit{
-        width: 45%;
-    }
-    .comment-edit{
-        width: 45%;
-    }
     }
  @media screen and (max-width:950px){
     .error-page{

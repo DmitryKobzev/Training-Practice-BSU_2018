@@ -85,6 +85,18 @@ textarea {
     .save-post{
         margin-top:7%;
     }
+    .top-edit{
+        width: 35%;
+    }
+    .Photo-edit{
+        width: 35%;
+    }
+    .comment-edit{
+        width: 35%;
+    }
+    .background{
+        max-width: 280px;
+    }
     }
  @media screen and (max-width:1050px){
     .post-edit{
@@ -99,6 +111,9 @@ textarea {
     }
     .comment-edit{
         width: 45%;
+    }
+    .background{
+        max-width: 235px;
     }
     }
  @media screen and (max-width:950px){
@@ -117,6 +132,25 @@ textarea {
         width: 65%;
     }
     }
+    @media screen and (max-width:800px){
+        .post-edit{
+            margin-top:10%;
+            width: 65%;
+            
+        }
+        .top-edit{
+            width: 65%;
+        }
+        .Photo-edit{
+            width: 65%;
+        }
+        .comment-edit{
+            width: 65%;
+        }
+        .background{
+            max-width: 275px;
+        }
+        }
 
  @media screen and (max-width:550px){
     .post-edit{
@@ -132,6 +166,10 @@ textarea {
     }
     .comment-edit{
         width: 65%;
+    }
+    .background{
+        height:0px;
+        max-width: 0px;
     }
     .save-post{
         font-size:15px;
