@@ -18,6 +18,9 @@ function getPhotoPosts() {
 app.get('/getPost', (req, res) => {
     let posts = getPhotoPosts();
     posts.getPost = mainModule.getPhotoPost;
+    if (req.query.id === undefined) {
+        res.send(400).end();
+    }
     let post = posts.getPost(req.query.id.toString());
     if (post) {
         res.send(post).end();
@@ -29,6 +32,9 @@ app.get('/getPost', (req, res) => {
 app.delete('/removePhotoPost', (req, res) => {
     let posts = getPhotoPosts();
     posts.removePost = mainModule.removePhotoPost;
+    if (req.query.id === undefined) {
+        res.send(400).end();
+    }
     if (posts.removePost(req.query.id.toString())) {
         fs.writeFileSync(way, JSON.stringify(posts));
         res.send(200).end();
@@ -40,6 +46,9 @@ app.delete('/removePhotoPost', (req, res) => {
 app.post('/addPhotoPost', (req, res) => {
     let posts = getPhotoPosts();
     posts.addPost = mainModule.addPhotoPost;
+    if (req.body === undefined) {
+        res.send(400).end();
+    }
     if (posts.addPost(req.body)) {
         fs.writeFileSync(way, JSON.stringify(posts));
         res.send(200).end();
@@ -53,6 +62,9 @@ app.put('/editPhotoPost', (req, res) => {
     let posts = getPhotoPosts();
     posts.editPost = mainModule.editPhotoPost;
     posts.getPost = mainModule.getPhotoPost;
+    if (req.query.id === undefined) {
+        res.send(400).end();
+    }
     let post = posts.getPost(req.query.id.toString());
     if (posts.editPost(req.query.id.toString(), req.body, post)) {
         fs.writeFileSync(way, JSON.stringify(posts));
@@ -75,7 +87,6 @@ app.post('/getPhotoPosts', (req, res) => {
     } else {
         res.send(404).end();
     }
-
 })
 
 
